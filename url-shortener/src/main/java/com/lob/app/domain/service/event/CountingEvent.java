@@ -1,4 +1,4 @@
 package com.lob.app.domain.service.event;
 
-public class CountIncreaseEvent {
+public class CountingEvent {
 }

@@ -15,4 +15,13 @@ public class UrlEntity {
 	@Column(name = "URL_ID")
 	private Long id;
 
+	@Column(name = "SHORT_URL")
+	private String shortUrl;
+
+	@Column(name = "TARGET_URL")
+	private String targetUrl;
+
+	@Column(name = "REQUEST_COUNT")
+	private Integer requestCount;
+
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class UrlEventListener {
 
 	@EventListener
-	public void countIncrease(CountIncreaseEvent countIncreaseEvent) {
+	public void countIncrease(CountingEvent countingEvent) {
 		// go to redis
 	}
 

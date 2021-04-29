@@ -2,7 +2,7 @@ package com.lob.app.domain.service;
 
 import com.lob.app.domain.persistence.UrlEntity;
 import com.lob.app.domain.persistence.UrlRepository;
-import com.lob.app.domain.service.event.CountIncreaseEvent;
+import com.lob.app.domain.service.event.CountingEvent;
 import com.lob.app.domain.service.model.Url;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -21,7 +21,7 @@ public class UrlService {
 
 	public UrlEntity redirectUrl(Url url) {
 		// counting
-		eventPublisher.publishEvent(new CountIncreaseEvent());
+		eventPublisher.publishEvent(new CountingEvent());
 		return new UrlEntity();
 	}
 
