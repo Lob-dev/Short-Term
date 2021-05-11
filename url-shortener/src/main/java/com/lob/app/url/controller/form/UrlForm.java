@@ -1,7 +1,6 @@
-package com.lob.app.controller.form;
+package com.lob.app.url.controller.form;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,29 +38,28 @@ public class UrlForm {
 	public static class Response {
 
 		@Getter
-		@NoArgsConstructor
+		@Builder
 		public static class Info {
 
-			private String shortUrl;
+			private final String shortUrl;
 
 		}
 
 		@Getter
-		@NoArgsConstructor
+		@Builder
 		public static class CountInfo {
 
-			private String shortUrl;
-			private String targetUrl;
-			private Integer requestCount;
+			private final String shortUrl;
+			private final Integer requestCount;
 
 		}
 
 		@Getter
-		@NoArgsConstructor
+		@Builder
 		public static class UrlInfo {
 
-			private String shortUrl;
-			private String targetUrl;
+			private final String shortUrl;
+			private final String targetUrl;
 
 		}
 	}

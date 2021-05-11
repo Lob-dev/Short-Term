@@ -1,11 +1,11 @@
-package com.lob.app.domain.service.event;
+package com.lob.app.url.domain.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CountingEvent {
+public class CreateEvent {
 
 	private final String shortUrl;
 

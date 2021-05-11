@@ -19,8 +19,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	implementation 'org.projectlombok:lombok:1.18.12'
+
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-	implementation 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 	runtime        'com.h2database:h2'
 	testRuntime    'com.h2database:h2'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {

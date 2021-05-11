@@ -1,12 +1,11 @@
-package com.lob.app.controller;
+package com.lob.app.url.controller;
 
-import com.lob.app.controller.form.UrlForm.Response;
-import com.lob.app.controller.form.UrlForm.Request;
-import com.lob.app.domain.service.UrlService;
+import com.lob.app.url.controller.form.UrlForm.Request;
+import com.lob.app.url.controller.form.UrlForm.Response;
+import com.lob.app.url.domain.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-
 import java.net.URI;
 
-import static com.lob.app.domain.mapper.UrlMapper.mapper;
-import static java.lang.String.*;
+import static com.lob.app.url.domain.UrlMapper.mapper;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,9 +33,9 @@ public class UrlController {
 
 	@SneakyThrows
 	@GetMapping("/{shortUrl}")
-	public ResponseEntity<Void> redirectUrl(@PathVariable String shortUrl, HttpHeaders headers) {
+	public ResponseEntity redirectUrl(@PathVariable String shortUrl, HttpHeaders headers) {
 		headers.setLocation(URI.create(urlService.redirectUrl(mapper.toUrl(shortUrl))));
-		return new ResponseEntity(headers, HttpStatus.OK);
+		return ResponseEntity.ok().headers(headers).build();
 	}
 
 	@GetMapping("/{shortUrl}/?")
