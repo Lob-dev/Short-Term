@@ -1,6 +1,5 @@
 package com.lob.app.url.domain.service;
 
-import com.lob.app.global.utils.XorEncryptUtils;
 import com.lob.app.url.domain.UrlEntity;
 import com.lob.app.url.domain.UrlRepository;
 import com.lob.app.url.domain.event.CountingEvent;
@@ -11,6 +10,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.lob.app.global.utils.Base64Utils.encode;
+import static com.lob.app.global.utils.XorEncryptUtils.encrypt;
 import static com.lob.app.url.domain.UrlMapper.mapper;
 
 @Service
@@ -23,7 +24,7 @@ public class UrlService {
 
 	public String createUrl(Url url) {
 
-		UrlEntity entity = urlRepository.save(mapper.toEntity(url, XorEncryptUtils.encrypt(url.getTargetUrl())));
+		UrlEntity entity = urlRepository.save(mapper.toEntity(url,encrypt(encode(url.getTargetUrl()))));
 
 		// redis 에 shortUrl : counting 형식으로 저장.
 		eventPublisher.publishEvent(new CreateEvent(url.getShortUrl()));
