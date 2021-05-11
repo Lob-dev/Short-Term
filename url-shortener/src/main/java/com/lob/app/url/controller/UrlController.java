@@ -31,7 +31,6 @@ public class UrlController {
 		return mapper.toInfo(urlService.createUrl(mapper.toUrl(create)));
 	}
 
-	@SneakyThrows
 	@GetMapping("/{shortUrl}")
 	public ResponseEntity redirectUrl(@PathVariable String shortUrl, HttpHeaders headers) {
 		headers.setLocation(URI.create(urlService.redirectUrl(mapper.toUrl(shortUrl))));
