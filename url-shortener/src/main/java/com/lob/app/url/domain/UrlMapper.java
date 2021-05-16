@@ -20,7 +20,7 @@ public interface UrlMapper {
 	UrlEntity toEntity(Url url, String shortUrl);
 
 	Response.Info toInfo(String shortUrl);
-	Response.UrlInfo toUrlInfo(UrlEntity entity);
+	Response.UrlInfo toUrlInfo(Url url);
 	Response.CountInfo toCountInfo(Url url);
 
 }

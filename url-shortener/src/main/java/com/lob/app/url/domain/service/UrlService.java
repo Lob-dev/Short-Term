@@ -2,7 +2,6 @@ package com.lob.app.url.domain.service;
 
 import com.lob.app.url.domain.UrlEntity;
 import com.lob.app.url.domain.UrlRepository;
-import com.lob.app.url.domain.event.CountingEvent;
 import com.lob.app.url.domain.event.CreateEvent;
 import com.lob.app.url.domain.model.Url;
 import lombok.RequiredArgsConstructor;
@@ -15,49 +14,57 @@ import static com.lob.app.global.utils.XorEncryptUtils.encrypt;
 import static com.lob.app.url.domain.UrlMapper.mapper;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class UrlService {
 
 	private final UrlRepository             urlRepository;
 	private final ApplicationEventPublisher eventPublisher;
 
+	// private final RedisTemplate<String, String> redisTemplate;
+
+	@Transactional
 	public String createUrl(Url url) {
 
-		UrlEntity entity = urlRepository.save(mapper.toEntity(url,encrypt(encode(url.getTargetUrl()))));
-
-		// redis 에 shortUrl : counting 형식으로 저장.
-		eventPublisher.publishEvent(new CreateEvent(url.getShortUrl()));
+		// redis 에 shortUrl : TargetUrl 형식으로 저장.
+		eventPublisher.publishEvent(new CreateEvent(url.getShortUrl(), url.getTargetUrl()));
 
 		// 생성된 단축 url 반환
-		return entity.getShortUrl();
+		return urlRepository.save(mapper.toEntity(url, encrypt(encode(url.getTargetUrl()))))
+				.getShortUrl();
 	}
 
+	@Transactional
 	public String redirectUrl(Url url) {
 
-		// counting
-		eventPublisher.publishEvent(new CountingEvent(url.getShortUrl()));
+		// ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+		// String targetUrl = valueOperations.get(url.getShortUrl());
+		UrlEntity entity = urlRepository.findByShortUrl(url.getShortUrl());
+		entity.incrementCount();
 
-		// redis 에서 get 후 반환
-		// shortUrl find -> get targetUrl
 		return "targetUrl";
 	}
 
 	@Transactional(readOnly=true)
-	public UrlEntity getUrl(Url url) {
-		return urlRepository.findByShortUrl(url.getShortUrl());
+	public Url getUrl(Url url) {
+
+		// ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+		// String targetUrl = valueOperations.get(url.getShortUrl());
+		String targetUrl = "";
+
+		return Url.builder()
+				.shortUrl(url.getShortUrl())
+				.targetUrl(targetUrl)
+				.build();
 	}
 
 	@Transactional(readOnly=true)
 	public Url getCount(Url url) {
 
-		// redis 에서 url 정보로 get 하여 카운팅 정보 반환
-		// RedisTemplate<String, Long> redis;
-		Long count = 0L;
+		UrlEntity entity = urlRepository.findByShortUrl(url.getShortUrl());
 
 		return Url.builder()
-				.shortUrl(url.getShortUrl())
-				.requestCount(count)
+				.shortUrl(entity.getShortUrl())
+				.requestCount(entity.getCount())
 				.build();
 	}
 }

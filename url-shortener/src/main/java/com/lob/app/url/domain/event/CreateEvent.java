@@ -8,5 +8,6 @@ import lombok.Getter;
 public class CreateEvent {
 
 	private final String shortUrl;
+	private final String targetUrl;
 
 }

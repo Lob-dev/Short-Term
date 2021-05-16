@@ -39,4 +39,11 @@ public class UrlEntity {
 	@Column(name = "TARGET_URL", nullable = false)
 	private String targetUrl;
 
+	@Column(name = "READ_COUNT")
+	private Long count;
+
+	public void incrementCount() {
+		++count;
+	}
+
 }

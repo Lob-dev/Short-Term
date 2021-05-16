@@ -4,7 +4,6 @@ import com.lob.app.url.controller.form.UrlForm.Request;
 import com.lob.app.url.controller.form.UrlForm.Response;
 import com.lob.app.url.domain.service.UrlService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -11,15 +11,8 @@ public class UrlEventListener {
 	@EventListener
 	public void create(CreateEvent createEvent) {
 		// set redis
-		// shortUrl : count
+		// shortUrl : targetUrl
 			// save
-	}
-
-	@EventListener
-	public void countIncrease(CountingEvent countingEvent) {
-		// increase redis counting
-		// shortUrl : count
-			// increase count of shortUrl
 	}
 
 }
