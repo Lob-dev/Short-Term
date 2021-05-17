@@ -10,8 +10,6 @@ public class XorEncryptUtils {
 			stringBuilder.append(Character.toString(inputString.charAt(i) ^ xorKey));
 		}
 
-		return stringBuilder
-				.subSequence(0, 7)
-				.toString();
+		return stringBuilder.toString();
 	}
 }
