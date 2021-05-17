@@ -22,7 +22,6 @@ import javax.persistence.Table;
 @Table(
 		name = "URL",
 		indexes = {
-			@Index(name = "IDX_URL_ID", columnList = "URL_ID"),
 			@Index(name = "IDX_SHORT_URL", columnList = "SHORT_URL")
 		}
 )
@@ -33,13 +32,13 @@ public class UrlEntity {
 	@Column(name = "URL_ID")
 	private Long id;
 
-	@Column(name = "SHORT_URL", nullable = false, length = 8)
+	@Column(name = "SHORT_URL", nullable = false, length = 8, unique = true)
 	private String shortUrl;
 
 	@Column(name = "TARGET_URL", nullable = false)
 	private String targetUrl;
 
-	@Column(name = "READ_COUNT")
+	@Column(name = "REQUEST_COUNT")
 	private Long count;
 
 	public void incrementCount() {
