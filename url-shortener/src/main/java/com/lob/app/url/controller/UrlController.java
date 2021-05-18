@@ -4,7 +4,7 @@ import com.lob.app.url.controller.form.UrlForm.Request;
 import com.lob.app.url.controller.form.UrlForm.Response;
 import com.lob.app.url.domain.service.UrlService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +31,11 @@ public class UrlController {
 	}
 
 	@GetMapping("/{shortUrl}")
-	public ResponseEntity redirectUrl(@PathVariable String shortUrl, HttpHeaders headers) {
-		headers.setLocation(URI.create(urlService.redirectUrl(mapper.toUrl(shortUrl))));
-		return ResponseEntity.ok().headers(headers).build();
+	public ResponseEntity redirectUrl(@PathVariable String shortUrl) {
+		return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(urlService.redirectUrl(mapper.toUrl(shortUrl)))).build();
 	}
 
-	@GetMapping("/{shortUrl}/?")
+	@GetMapping("/{shortUrl}/info")
 	public Response.UrlInfo getUrlInfo(@PathVariable String shortUrl) {
 		return mapper.toUrlInfo(urlService.getUrl(mapper.toUrl(shortUrl)));
 	}

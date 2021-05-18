@@ -1,0 +1,20 @@
+
+### URL 생성 - 현재 입력 값으로는 3DtnlNC6이라는 문자열이 반환됩니다.
+POST http://localhost:8080/api/urls
+Content-Type: application/json
+
+{
+  "targetUrl": "https://jojoldu.tistory.com/266"
+}
+
+
+### Target URL로 리다이렉트 진행
+GET http://localhost:8080/api/3DtnlNC6
+
+
+### 해당 단축 URL이 어느 Url 위치로 리다이렉트 시키는지 확인
+GET http://localhost:8080/api/3DtnlNC6/info
+
+
+### 해당 단축 URL이 얼마나 호출되었는지 확인
+GET http://localhost:8080/api/3DtnlNC6/count

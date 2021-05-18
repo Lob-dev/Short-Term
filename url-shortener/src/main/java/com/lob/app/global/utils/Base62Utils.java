@@ -8,7 +8,7 @@ public class Base62Utils {
 
 	public static String encode(String inputString) {
 		Base62 encoder = Base62.createInstance();
-		return new String(encoder.encode(inputString.getBytes(StandardCharsets.UTF_8))).subSequence(0, 7)
+		return new String(encoder.encode(inputString.getBytes(StandardCharsets.UTF_8))).subSequence(0, 8)
 				.toString();
 	}
 

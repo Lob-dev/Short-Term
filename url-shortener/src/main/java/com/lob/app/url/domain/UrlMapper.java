@@ -4,6 +4,7 @@ import com.lob.app.url.controller.form.UrlForm.Request;
 import com.lob.app.url.controller.form.UrlForm.Response;
 import com.lob.app.url.domain.model.Url;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -15,9 +16,8 @@ public interface UrlMapper {
 	Url toUrl(Request.Create create);
 	Url toUrl(String shortUrl);
 
+	@Mapping(target = "count", source = "requestCount")
 	UrlEntity toEntity(Url url);
-
-	UrlEntity toEntity(Url url, String shortUrl);
 
 	Response.Info toInfo(String shortUrl);
 	Response.UrlInfo toUrlInfo(Url url);
