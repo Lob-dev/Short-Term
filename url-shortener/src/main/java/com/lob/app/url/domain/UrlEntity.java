@@ -17,29 +17,21 @@ import javax.persistence.Table;
 
 @Getter
 @Entity
-@Builder
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(
-		name = "URL",
-		indexes = {
-			@Index(name = "IDX_SHORT_URL", columnList = "SHORT_URL")
-		}
-)
+@Table(name = "URL")
 public class UrlEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "URL_ID")
 	private Long id;
 
 	@Column(name = "SHORT_URL", nullable = false, length = 8, unique = true)
 	private String shortUrl;
 
-	@Column(name = "TARGET_URL", nullable = false)
+	@Column(name = "TARGET_URL", nullable = false, unique = true)
 	private String targetUrl;
-
 	@Column(name = "REQUEST_COUNT")
 	private Long count;
 
@@ -47,4 +39,11 @@ public class UrlEntity {
 		++count;
 	}
 
+	@Builder
+	public UrlEntity(Long id, String shortUrl, String targetUrl, Long count) {
+		this.id = id;
+		this.shortUrl = shortUrl;
+		this.targetUrl = targetUrl;
+		this.count = count;
+	}
 }

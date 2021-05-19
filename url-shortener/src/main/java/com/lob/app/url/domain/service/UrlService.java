@@ -3,6 +3,7 @@ package com.lob.app.url.domain.service;
 import com.lob.app.url.domain.UrlEntity;
 import com.lob.app.url.domain.UrlRepository;
 import com.lob.app.url.domain.event.CountingEvent;
+import com.lob.app.url.domain.exception.NoSuchURLException;
 import com.lob.app.url.domain.model.Url;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -34,18 +35,16 @@ public class UrlService {
 				.targetUrl(url.getTargetUrl())
 				.requestCount(0L)
 				.build();
-		String createUrl = buildUrl.getShortUrl();
-
 		UrlEntity buildEntity = mapper.toEntity(buildUrl);
-		urlRepository.save(buildEntity);
 
+		String createUrl = buildUrl.getShortUrl();
 		String savedUrl = valueOperations.get(createUrl);
-		if (ObjectUtils.isEmpty(savedUrl)){
+		if (ObjectUtils.isEmpty(savedUrl)) {
+			urlRepository.save(buildEntity);
 			valueOperations.append(createUrl, buildUrl.getTargetUrl());
-			return createUrl;
+		} else {
+			eventPublisher.publishEvent(new CountingEvent(createUrl));
 		}
-
-		eventPublisher.publishEvent(new CountingEvent(createUrl));
 		return createUrl;
 	}
 
@@ -53,6 +52,10 @@ public class UrlService {
 	public String redirectUrl(Url url) {
 
 		ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+		String savedUrl = valueOperations.get(url.getShortUrl());
+		if (ObjectUtils.isEmpty(savedUrl)) {
+			throw new NoSuchURLException("URL Not Found");
+		}
 		eventPublisher.publishEvent(new CountingEvent(url.getShortUrl()));
 		return valueOperations.get(url.getShortUrl());
 	}

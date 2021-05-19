@@ -1,6 +1,7 @@
 package com.lob.app.url.controller.form;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class UrlForm {
 
 		@Getter
 		@NoArgsConstructor
+		@AllArgsConstructor
 		public static class Create {
 
 			@URL(message = "올바른 URL 형식이 아닙니다.")
@@ -26,6 +28,7 @@ public class UrlForm {
 
 		@Getter
 		@NoArgsConstructor
+		@AllArgsConstructor
 		public static class GetCount {
 
 			@NotBlank
