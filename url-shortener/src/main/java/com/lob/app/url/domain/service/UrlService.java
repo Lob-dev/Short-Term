@@ -36,8 +36,8 @@ public class UrlService {
 				.requestCount(0L)
 				.build();
 		UrlEntity buildEntity = mapper.toEntity(buildUrl);
-
 		String createUrl = buildUrl.getShortUrl();
+
 		String savedUrl = valueOperations.get(createUrl);
 		if (ObjectUtils.isEmpty(savedUrl)) {
 			urlRepository.save(buildEntity);
@@ -52,10 +52,10 @@ public class UrlService {
 	public String redirectUrl(Url url) {
 
 		ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+
 		String savedUrl = valueOperations.get(url.getShortUrl());
-		if (ObjectUtils.isEmpty(savedUrl)) {
-			throw new NoSuchURLException("URL Not Found");
-		}
+		if (ObjectUtils.isEmpty(savedUrl)) { throw new NoSuchURLException("URL Not Found"); }
+
 		eventPublisher.publishEvent(new CountingEvent(url.getShortUrl()));
 		return valueOperations.get(url.getShortUrl());
 	}
@@ -64,7 +64,9 @@ public class UrlService {
 	public Url getUrl(Url url) {
 
 		ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+
 		String targetUrl = valueOperations.get(url.getShortUrl());
+		if (ObjectUtils.isEmpty(targetUrl)) { throw new NoSuchURLException("URL Not Found"); }
 
 		return Url.builder()
 				.shortUrl(url.getShortUrl())
@@ -76,6 +78,7 @@ public class UrlService {
 	public Url getCount(Url url) {
 
 		UrlEntity entity = urlRepository.findByShortUrl(url.getShortUrl());
+		if (ObjectUtils.isEmpty(entity)) { throw new NoSuchURLException("URL Not Found"); }
 
 		return Url.builder()
 				.shortUrl(entity.getShortUrl())
