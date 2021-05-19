@@ -58,6 +58,17 @@ dependencies {
 
 <br/>
 
+**Docker script**
+```docker
+    
+    docker run --name redis -p 6379:6379 -d redis
+   
+    docker run -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=username -e POSTGRES_DB=springboot --name postgres_DB -d postgres
+    
+```
+
+<br/>
+
 ### API End-Point
 
 ---
@@ -84,11 +95,11 @@ dependencies {
 
 ---
 
-- Docker를 통해 Redis 인스턴스를 띄우고 간단한 설정을 하여 사용한다..
-- Intellij의 http File을 사용하여 Postman을 대체한다..
+- Docker를 통해 Redis 인스턴스를 띄우고 간단한 설정을 하여 사용한다.
+- Intellij의 http File을 사용하여 Postman을 대체한다.
 - 단축 URL이 어떻게 만들어지는지 고려해보고 최소한의 알고리즘을 사용하여 이를 동작하게 한다.
   - url 정보를 굳이 숨길 필요는 없으므로 별도 상태 관리를 통한 중복 처리없이 같은 URL을 제공한다.
-- Mapstruct를 사용하여 변환 계층 코드를 최소화한다..
+- Mapstruct를 사용하여 변환 계층 코드를 최소화한다.
 
 
-<br/>
+<br/> 
