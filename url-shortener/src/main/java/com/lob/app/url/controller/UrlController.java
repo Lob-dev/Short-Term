@@ -41,12 +41,12 @@ public class UrlController {
 	}
 
 	@GetMapping("/{shortUrl}/info")
-	public Response.UrlInfo getUrlInfo(@PathVariable String shortUrl) {
+	public Response.UrlInfo getUrlInfo(@PathVariable @Size(min = 8, max = 8) String shortUrl) {
 		return mapper.toUrlInfo(urlService.getUrl(mapper.toUrl(shortUrl)));
 	}
 
 	@GetMapping("/{shortUrl}/count")
-	public Response.CountInfo getCountInfo(@PathVariable String shortUrl) {
+	public Response.CountInfo getCountInfo(@PathVariable @Size(min = 8, max = 8) String shortUrl) {
 		return mapper.toCountInfo(urlService.getCount(mapper.toUrl(shortUrl)));
 	}
 
