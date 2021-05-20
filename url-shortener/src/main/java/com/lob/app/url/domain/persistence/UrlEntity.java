@@ -1,4 +1,4 @@
-package com.lob.app.url.domain;
+package com.lob.app.url.domain.persistence;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

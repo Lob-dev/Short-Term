@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.net.URI;
 
-import static com.lob.app.url.domain.UrlMapper.mapper;
+import static com.lob.app.url.domain.service.mapper.UrlMapper.mapper;
 
 @Validated
 @RestController

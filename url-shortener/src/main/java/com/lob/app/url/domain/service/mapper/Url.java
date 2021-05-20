@@ -1,4 +1,4 @@
-package com.lob.app.url.domain.model;
+package com.lob.app.url.domain.service.mapper;
 
 import lombok.Builder;
 import lombok.Getter;

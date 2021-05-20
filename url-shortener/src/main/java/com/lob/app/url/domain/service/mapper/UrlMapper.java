@@ -1,8 +1,8 @@
-package com.lob.app.url.domain;
+package com.lob.app.url.domain.service.mapper;
 
 import com.lob.app.url.controller.form.UrlForm.Request;
 import com.lob.app.url.controller.form.UrlForm.Response;
-import com.lob.app.url.domain.model.Url;
+import com.lob.app.url.domain.persistence.UrlEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

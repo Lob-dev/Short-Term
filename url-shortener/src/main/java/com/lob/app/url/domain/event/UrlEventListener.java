@@ -1,7 +1,7 @@
 package com.lob.app.url.domain.event;
 
-import com.lob.app.url.domain.UrlEntity;
-import com.lob.app.url.domain.UrlRepository;
+import com.lob.app.url.domain.persistence.UrlEntity;
+import com.lob.app.url.domain.persistence.UrlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

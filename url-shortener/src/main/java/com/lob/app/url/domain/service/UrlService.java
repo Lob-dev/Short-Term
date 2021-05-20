@@ -1,10 +1,10 @@
 package com.lob.app.url.domain.service;
 
-import com.lob.app.url.domain.UrlEntity;
-import com.lob.app.url.domain.UrlRepository;
+import com.lob.app.url.domain.persistence.UrlEntity;
+import com.lob.app.url.domain.persistence.UrlRepository;
 import com.lob.app.url.domain.event.CountingEvent;
 import com.lob.app.url.domain.exception.NoSuchURLException;
-import com.lob.app.url.domain.model.Url;
+import com.lob.app.url.domain.service.mapper.Url;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,7 +15,7 @@ import org.springframework.util.ObjectUtils;
 
 import static com.lob.app.global.utils.Base62Utils.encode;
 import static com.lob.app.global.utils.XorEncryptUtils.encrypt;
-import static com.lob.app.url.domain.UrlMapper.mapper;
+import static com.lob.app.url.domain.service.mapper.UrlMapper.mapper;
 
 @Service
 @RequiredArgsConstructor
