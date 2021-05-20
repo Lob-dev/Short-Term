@@ -42,8 +42,7 @@ public class UrlService {
 		if (ObjectUtils.isEmpty(savedUrl)) {
 			urlRepository.save(buildEntity);
 			valueOperations.append(createUrl, buildUrl.getTargetUrl());
-		} else {
-			eventPublisher.publishEvent(new CountingEvent(createUrl));
+			return createUrl;
 		}
 		return createUrl;
 	}

@@ -36,20 +36,20 @@ class UrlControllerTest {
 		Request.Create create = getUrlCreateRequest();
 
 		String firstReturnValue = mockMvc.perform(post("/api/urls")
-														.contentType(MediaType.APPLICATION_JSON)
-														.content(toJson(create)))
-														.andDo(print())
-													.andExpect(status().isCreated())
-													.andExpect(jsonPath("$.shortUrl").exists())
-													.andReturn().getResponse().getContentAsString();
+											.contentType(MediaType.APPLICATION_JSON)
+											.content(toJson(create)))
+										.andDo(print())
+										.andExpect(status().isCreated())
+										.andExpect(jsonPath("$.shortUrl").exists())
+										.andReturn().getResponse().getContentAsString();
 
 		String secondReturnValue = mockMvc.perform(post("/api/urls")
-														.contentType(MediaType.APPLICATION_JSON)
-														.content(toJson(create)))
-														.andDo(print())
-													.andExpect(status().isCreated())
-													.andExpect(jsonPath("$.shortUrl").exists())
-													.andReturn().getResponse().getContentAsString();
+											.contentType(MediaType.APPLICATION_JSON)
+											.content(toJson(create)))
+										.andDo(print())
+										.andExpect(status().isCreated())
+										.andExpect(jsonPath("$.shortUrl").exists())
+										.andReturn().getResponse().getContentAsString();
 
 		String readFirst = JsonPath.read(firstReturnValue, "$.shortUrl");
 		String readSecond = JsonPath.read(secondReturnValue, "$.shortUrl");
@@ -62,12 +62,12 @@ class UrlControllerTest {
 		Request.Create create = getUrlCreateRequest();
 
 		mockMvc.perform(post("/api/urls")
-								.contentType(MediaType.APPLICATION_JSON)
-								.content(toJson(create)))
-								.andDo(print())
-							.andExpect(status().isCreated())
-							.andExpect(jsonPath("$.shortUrl").exists())
-							.andReturn().getResponse().getContentAsString();
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(toJson(create)))
+					.andDo(print())
+					.andExpect(status().isCreated())
+					.andExpect(jsonPath("$.shortUrl").exists())
+					.andReturn().getResponse().getContentAsString();
 	}
 
 	@Test
@@ -76,12 +76,12 @@ class UrlControllerTest {
 		Request.Create create = getUrlCreateRequest();
 
 		String returnValue = mockMvc.perform(post("/api/urls")
-													.contentType(MediaType.APPLICATION_JSON)
-													.content(toJson(create)))
-													.andDo(print())
-												.andExpect(status().isCreated())
-												.andExpect(jsonPath("$.shortUrl").exists())
-												.andReturn().getResponse().getContentAsString();
+											.contentType(MediaType.APPLICATION_JSON)
+											.content(toJson(create)))
+										.andDo(print())
+										.andExpect(status().isCreated())
+										.andExpect(jsonPath("$.shortUrl").exists())
+										.andReturn().getResponse().getContentAsString();
 
 		String read = JsonPath.read(returnValue, "$.shortUrl");
 		assertEquals(read.length(), 8);
@@ -91,10 +91,10 @@ class UrlControllerTest {
 	void SHORT_URL을_통해_요청할_경우_Target_URL으로_이동되어야_한다() throws Exception {
 
 		mockMvc.perform(get("/api/3DtnlNC6")
-								.contentType(MediaType.APPLICATION_JSON))
-								.andDo(print())
-							.andExpect(status().isFound())
-							.andExpect(redirectedUrl("https://jojoldu.tistory.com/266"))
+						.contentType(MediaType.APPLICATION_JSON))
+					.andDo(print())
+					.andExpect(status().isFound())
+					.andExpect(redirectedUrl("https://jojoldu.tistory.com/266"))
 		;
 	}
 
@@ -104,11 +104,11 @@ class UrlControllerTest {
 		Request.GetCount getCount = new Request.GetCount("https://jojoldu.tistory.com/266");
 
 		mockMvc.perform(get("/api/3DtnlNC6/count")
-								.contentType(MediaType.APPLICATION_JSON))
-								.andDo(print())
-							.andExpect(status().isOk())
-							.andExpect(jsonPath("$.shortUrl").exists())
-							.andExpect(jsonPath("$.requestCount").exists());
+						.contentType(MediaType.APPLICATION_JSON))
+					.andDo(print())
+					.andExpect(status().isOk())
+					.andExpect(jsonPath("$.shortUrl").exists())
+					.andExpect(jsonPath("$.requestCount").exists());
 	}
 
 	@Test
@@ -117,29 +117,29 @@ class UrlControllerTest {
 		Request.Create create = getUrlCreateBadRequest();
 
 		mockMvc.perform(post("/api/urls")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(toJson(create)))
-				.andDo(print())
-				.andExpect(status().isBadRequest())
-				.andReturn().getResponse().getContentAsString();
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(toJson(create)))
+					.andDo(print())
+					.andExpect(status().isBadRequest())
+					.andReturn().getResponse().getContentAsString();
 	}
 
 	@Test
 	void 주어지는_Short_URL이_8자리가_아닌_경우_400을_반환하여야_한다() throws Exception {
 
 		mockMvc.perform(get("/api/3DtnlNC")
-				.contentType(MediaType.APPLICATION_JSON))
-				.andDo(print())
-				.andExpect(status().isBadRequest());
+						.contentType(MediaType.APPLICATION_JSON))
+					.andDo(print())
+					.andExpect(status().isBadRequest());
 	}
 
 	@Test
 	void 주어지는_Short_URL의_정보가_없는_경우_400을_반환하여야_한다() throws Exception {
 
 		mockMvc.perform(get("/api/FFFFFFFF")
-				.contentType(MediaType.APPLICATION_JSON))
-				.andDo(print())
-				.andExpect(status().isBadRequest());
+						.contentType(MediaType.APPLICATION_JSON))
+					.andDo(print())
+					.andExpect(status().isBadRequest());
 	}
 
 	private Request.Create getUrlCreateRequest() {
