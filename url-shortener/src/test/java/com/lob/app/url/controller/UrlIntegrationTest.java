@@ -35,7 +35,8 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		String firstReturnValue = mockMvc.perform(post("/api/urls")
+		String firstReturnValue = mockMvc.perform(
+												post("/api/urls")
 													.contentType(MediaType.APPLICATION_JSON)
 													.content(toJson(create)))
 												.andDo(print())
@@ -43,7 +44,8 @@ class UrlIntegrationTest extends TestIntegrationContext {
 												.andExpect(jsonPath("$.shortUrl").exists())
 												.andReturn().getResponse().getContentAsString();
 
-		String secondReturnValue = mockMvc.perform(post("/api/urls")
+		String secondReturnValue = mockMvc.perform(
+												post("/api/urls")
 													.contentType(MediaType.APPLICATION_JSON)
 													.content(toJson(create)))
 												.andDo(print())
@@ -62,13 +64,13 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		mockMvc.perform(post("/api/urls")
+		mockMvc.perform(
+					post("/api/urls")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(toJson(create)))
 					.andDo(print())
 					.andExpect(status().isCreated())
-					.andExpect(jsonPath("$.shortUrl").exists())
-					.andReturn().getResponse().getContentAsString();
+					.andExpect(jsonPath("$.shortUrl").exists());
 	}
 
 
@@ -77,7 +79,8 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		String returnValue = mockMvc.perform(post("/api/urls")
+		String returnValue = mockMvc.perform(
+										post("/api/urls")
 											.contentType(MediaType.APPLICATION_JSON)
 											.content(toJson(create)))
 										.andDo(print())
@@ -95,14 +98,16 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		mockMvc.perform(post("/api/urls")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(toJson(create)))
-				.andDo(print())
-				.andExpect(status().isCreated())
-				.andExpect(jsonPath("$.shortUrl").exists());
+		mockMvc.perform(
+					post("/api/urls")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(toJson(create)))
+					.andDo(print())
+					.andExpect(status().isCreated())
+					.andExpect(jsonPath("$.shortUrl").exists());
 
-		mockMvc.perform(get("/api/3DtnlNC6")
+		mockMvc.perform(
+					get("/api/3DtnlNC6")
 						.contentType(MediaType.APPLICATION_JSON))
 					.andDo(print())
 					.andExpect(status().isFound())
@@ -116,14 +121,16 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		mockMvc.perform(post("/api/urls")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(toJson(create)))
-				.andDo(print())
-				.andExpect(status().isCreated())
-				.andExpect(jsonPath("$.shortUrl").exists());
+		mockMvc.perform(
+					post("/api/urls")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(toJson(create)))
+					.andDo(print())
+					.andExpect(status().isCreated())
+					.andExpect(jsonPath("$.shortUrl").exists());
 
-		mockMvc.perform(get("/api/3DtnlNC6/count")
+		mockMvc.perform(
+					get("/api/3DtnlNC6/count")
 						.contentType(MediaType.APPLICATION_JSON))
 					.andDo(print())
 					.andExpect(status().isOk())
@@ -137,7 +144,8 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateBadRequest();
 
-		mockMvc.perform(post("/api/urls")
+		mockMvc.perform(
+					post("/api/urls")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(toJson(create)))
 					.andDo(print())
@@ -149,7 +157,8 @@ class UrlIntegrationTest extends TestIntegrationContext {
 	@Test
 	void 주어지는_Short_URL이_8자리가_아닌_경우_400을_반환하여야_한다() throws Exception {
 
-		mockMvc.perform(get("/api/3DtnlNC")
+		mockMvc.perform(
+					get("/api/3DtnlNC")
 						.contentType(MediaType.APPLICATION_JSON))
 					.andDo(print())
 					.andExpect(status().isBadRequest());
@@ -159,7 +168,8 @@ class UrlIntegrationTest extends TestIntegrationContext {
 	@Test
 	void 주어지는_Short_URL의_정보가_없는_경우_400을_반환하여야_한다() throws Exception {
 
-		mockMvc.perform(get("/api/FFFFFFFF")
+		mockMvc.perform(
+					get("/api/FFFFFFFF")
 						.contentType(MediaType.APPLICATION_JSON))
 					.andDo(print())
 					.andExpect(status().isBadRequest());
