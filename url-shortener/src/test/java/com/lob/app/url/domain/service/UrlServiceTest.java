@@ -1,12 +1,13 @@
 package com.lob.app.url.domain.service;
 
+import com.lob.app.global.utils.Base62Encoder;
+import com.lob.app.global.utils.Encoder;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.lob.app.global.utils.Base62Utils.encode;
 import static com.lob.app.global.utils.XorEncryptUtils.encrypt;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -27,7 +28,9 @@ class UrlServiceTest {
 	})
 	void Short_URL_생성_테스트(String targetUrl) {
 
-		String encodedString = encode(encrypt(targetUrl));
+		Encoder encoder = new Base62Encoder();
+
+		String encodedString = encoder.encode(encrypt(targetUrl));
 		assertTrue(encodedString.matches(regex));
 	}
 }

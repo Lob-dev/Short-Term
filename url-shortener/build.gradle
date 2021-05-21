@@ -27,7 +27,9 @@ dependencies {
 
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 	annotationProcessor 'org.projectlombok:lombok:1.18.12'
-
+	testImplementation 'org.testcontainers:testcontainers:1.15.2'
+	testImplementation 'org.testcontainers:junit-jupiter:1.15.2'
+	testImplementation 'org.testcontainers:postgresql:1.15.2'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

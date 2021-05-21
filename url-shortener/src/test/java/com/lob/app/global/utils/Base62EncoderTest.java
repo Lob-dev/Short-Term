@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Base62UtilsTest {
+class Base62EncoderTest {
 
 	@Test
 	void Base_62_인코딩_테스트() {

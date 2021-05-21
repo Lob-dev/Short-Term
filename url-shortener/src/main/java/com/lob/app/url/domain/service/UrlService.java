@@ -1,9 +1,11 @@
 package com.lob.app.url.domain.service;
 
-import com.lob.app.url.domain.persistence.UrlEntity;
-import com.lob.app.url.domain.persistence.UrlRepository;
+import com.lob.app.global.utils.Base62Encoder;
+import com.lob.app.global.utils.Encoder;
 import com.lob.app.url.domain.event.CountingEvent;
 import com.lob.app.url.domain.exception.NoSuchURLException;
+import com.lob.app.url.domain.persistence.UrlEntity;
+import com.lob.app.url.domain.persistence.UrlRepository;
 import com.lob.app.url.domain.service.mapper.Url;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import static com.lob.app.global.utils.Base62Utils.encode;
 import static com.lob.app.global.utils.XorEncryptUtils.encrypt;
 import static com.lob.app.url.domain.service.mapper.UrlMapper.mapper;
 
@@ -25,19 +26,19 @@ public class UrlService {
 	private final ApplicationEventPublisher eventPublisher;
 	private final RedisTemplate<String, String> redisTemplate;
 
-	@Transactional
 	public String createUrl(Url url) {
 
 		ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
 
+		Encoder encoder = new Base62Encoder();
 		Url buildUrl = Url.builder()
-				.shortUrl(encode(encrypt(url.getTargetUrl())))
-				.targetUrl(url.getTargetUrl())
-				.requestCount(0L)
-				.build();
+						  .shortUrl(encoder.encode(encrypt(url.getTargetUrl())))
+						  .targetUrl(url.getTargetUrl())
+						  .requestCount(0L)
+						  .build();
 		UrlEntity buildEntity = mapper.toEntity(buildUrl);
-		String createUrl = buildUrl.getShortUrl();
 
+		String createUrl = buildUrl.getShortUrl();
 		String savedUrl = valueOperations.get(createUrl);
 		if (ObjectUtils.isEmpty(savedUrl)) {
 			urlRepository.save(buildEntity);
@@ -56,6 +57,7 @@ public class UrlService {
 		if (ObjectUtils.isEmpty(savedUrl)) { throw new NoSuchURLException("URL Not Found"); }
 
 		eventPublisher.publishEvent(new CountingEvent(url.getShortUrl()));
+
 		return valueOperations.get(url.getShortUrl());
 	}
 
@@ -68,9 +70,9 @@ public class UrlService {
 		if (ObjectUtils.isEmpty(targetUrl)) { throw new NoSuchURLException("URL Not Found"); }
 
 		return Url.builder()
-				.shortUrl(url.getShortUrl())
-				.targetUrl(targetUrl)
-				.build();
+				  .shortUrl(url.getShortUrl())
+				  .targetUrl(targetUrl)
+				  .build();
 	}
 
 	@Transactional(readOnly=true)
@@ -80,8 +82,8 @@ public class UrlService {
 		if (ObjectUtils.isEmpty(entity)) { throw new NoSuchURLException("URL Not Found"); }
 
 		return Url.builder()
-				.shortUrl(entity.getShortUrl())
-				.requestCount(entity.getCount())
-				.build();
+				  .shortUrl(entity.getShortUrl())
+				  .requestCount(entity.getCount())
+				  .build();
 	}
 }

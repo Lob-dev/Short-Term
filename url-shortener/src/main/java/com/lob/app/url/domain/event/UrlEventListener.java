@@ -4,11 +4,9 @@ import com.lob.app.url.domain.persistence.UrlEntity;
 import com.lob.app.url.domain.persistence.UrlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Async
 @Component
 @RequiredArgsConstructor
 public class UrlEventListener {
