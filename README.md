@@ -64,9 +64,14 @@ dependencies {
 **Docker script**
 ```docker
     
+    // docker 기준
     docker run --name redis -p 6379:6379 -d redis
    
     docker run -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=username -e POSTGRES_DB=springboot --name postgres_DB -d postgres
+    
+    
+    // 2021-06-06 docker-compose.yml 추가
+    docker-compose -f ./docker-compose.yml up
     
 ```
 
