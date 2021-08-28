@@ -35,23 +35,21 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		String firstReturnValue = mockMvc.perform(
-												post("/api/urls")
-													.contentType(MediaType.APPLICATION_JSON)
-													.content(toJson(create)))
-												.andDo(print())
-												.andExpect(status().isCreated())
-												.andExpect(jsonPath("$.shortUrl").exists())
-												.andReturn().getResponse().getContentAsString();
+		String firstReturnValue = mockMvc.perform(post("/api/urls")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(toJson(create)))
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.shortUrl").exists())
+				.andReturn().getResponse().getContentAsString();
 
-		String secondReturnValue = mockMvc.perform(
-												post("/api/urls")
-													.contentType(MediaType.APPLICATION_JSON)
-													.content(toJson(create)))
-												.andDo(print())
-												.andExpect(status().isCreated())
-												.andExpect(jsonPath("$.shortUrl").exists())
-												.andReturn().getResponse().getContentAsString();
+		String secondReturnValue = mockMvc.perform(post("/api/urls")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(toJson(create)))
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.shortUrl").exists())
+				.andReturn().getResponse().getContentAsString();
 
 		String readFirst = JsonPath.read(firstReturnValue, "$.shortUrl");
 		String readSecond = JsonPath.read(secondReturnValue, "$.shortUrl");
@@ -64,13 +62,12 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		mockMvc.perform(
-					post("/api/urls")
+		mockMvc.perform(post("/api/urls")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(toJson(create)))
-					.andDo(print())
-					.andExpect(status().isCreated())
-					.andExpect(jsonPath("$.shortUrl").exists());
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.shortUrl").exists());
 	}
 
 
@@ -79,14 +76,13 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		String returnValue = mockMvc.perform(
-										post("/api/urls")
-											.contentType(MediaType.APPLICATION_JSON)
-											.content(toJson(create)))
-										.andDo(print())
-										.andExpect(status().isCreated())
-										.andExpect(jsonPath("$.shortUrl").exists())
-										.andReturn().getResponse().getContentAsString();
+		String returnValue = mockMvc.perform(post("/api/urls")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(toJson(create)))
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.shortUrl").exists())
+				.andReturn().getResponse().getContentAsString();
 
 		String read = JsonPath.read(returnValue, "$.shortUrl");
 		assertEquals(read.length(), 8);
@@ -98,20 +94,18 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		mockMvc.perform(
-					post("/api/urls")
+		mockMvc.perform(post("/api/urls")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(toJson(create)))
-					.andDo(print())
-					.andExpect(status().isCreated())
-					.andExpect(jsonPath("$.shortUrl").exists());
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.shortUrl").exists());
 
-		mockMvc.perform(
-					get("/api/3DtnlNC6")
+		mockMvc.perform(get("/api/3DtnlNC6")
 						.contentType(MediaType.APPLICATION_JSON))
-					.andDo(print())
-					.andExpect(status().isFound())
-					.andExpect(redirectedUrl("https://jojoldu.tistory.com/266"))
+				.andDo(print())
+				.andExpect(status().isFound())
+				.andExpect(redirectedUrl("https://jojoldu.tistory.com/266"))
 		;
 	}
 
@@ -121,21 +115,19 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateRequest();
 
-		mockMvc.perform(
-					post("/api/urls")
+		mockMvc.perform(post("/api/urls")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(toJson(create)))
-					.andDo(print())
-					.andExpect(status().isCreated())
-					.andExpect(jsonPath("$.shortUrl").exists());
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.shortUrl").exists());
 
-		mockMvc.perform(
-					get("/api/3DtnlNC6/count")
+		mockMvc.perform(get("/api/3DtnlNC6/count")
 						.contentType(MediaType.APPLICATION_JSON))
-					.andDo(print())
-					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.shortUrl").exists())
-					.andExpect(jsonPath("$.requestCount").exists());
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.shortUrl").exists())
+				.andExpect(jsonPath("$.requestCount").exists());
 	}
 
 
@@ -144,35 +136,32 @@ class UrlIntegrationTest extends TestIntegrationContext {
 
 		Request.Create create = getUrlCreateBadRequest();
 
-		mockMvc.perform(
-					post("/api/urls")
+		mockMvc.perform(post("/api/urls")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(toJson(create)))
-					.andDo(print())
-					.andExpect(status().isBadRequest())
-					.andReturn().getResponse().getContentAsString();
+				.andDo(print())
+				.andExpect(status().isBadRequest())
+				.andReturn().getResponse().getContentAsString();
 	}
 
 
 	@Test
 	void 주어지는_Short_URL이_8자리가_아닌_경우_400을_반환하여야_한다() throws Exception {
 
-		mockMvc.perform(
-					get("/api/3DtnlNC")
+		mockMvc.perform(get("/api/3DtnlNC")
 						.contentType(MediaType.APPLICATION_JSON))
-					.andDo(print())
-					.andExpect(status().isBadRequest());
+				.andDo(print())
+				.andExpect(status().isBadRequest());
 	}
 
 
 	@Test
 	void 주어지는_Short_URL의_정보가_없는_경우_400을_반환하여야_한다() throws Exception {
 
-		mockMvc.perform(
-					get("/api/FFFFFFFF")
+		mockMvc.perform(get("/api/FFFFFFFF")
 						.contentType(MediaType.APPLICATION_JSON))
-					.andDo(print())
-					.andExpect(status().isBadRequest());
+				.andDo(print())
+				.andExpect(status().isBadRequest());
 	}
 
 	private Request.Create getUrlCreateRequest() {
