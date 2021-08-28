@@ -32,6 +32,7 @@ public class UrlEntity {
 
 	@Column(name = "TARGET_URL", nullable = false, unique = true)
 	private String targetUrl;
+
 	@Column(name = "REQUEST_COUNT")
 	private Long count;
 

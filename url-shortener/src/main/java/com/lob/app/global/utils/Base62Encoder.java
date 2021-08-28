@@ -12,5 +12,4 @@ public class Base62Encoder implements Encoder{
 		return new String(encoder.encode(inputString.getBytes(StandardCharsets.UTF_8))).subSequence(0, 8)
 				.toString();
 	}
-
 }
